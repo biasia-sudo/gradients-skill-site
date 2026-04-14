@@ -96,45 +96,89 @@ export default function Home() {
         <div className="container mx-auto px-6 py-20 max-w-6xl">
           <h2 className="text-3xl font-bold mb-12">Before / After</h2>
           
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Before */}
+          <div className="space-y-16">
+            {/* Sunset */}
             <div>
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold mb-2">Before</h3>
-                <p className="text-sm text-neutral-600 mb-4">Generic prompt, generic ramp</p>
+              <h3 className="text-lg font-semibold mb-6">Sunset / 日落</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(90deg, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
+                    label="Before: RGB interpolation"
+                    description="Muddy transitions, unnatural middle tones"
+                  />
+                </div>
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
+                    label="After: Dyed Horizon (RedYellow preset)"
+                    description="Smooth, vibrant, perceptually correct"
+                  />
+                </div>
               </div>
-              
-              <GradientBox
-                gradient="linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%)"
-                label="RGB interpolation"
-                description="Muddy middle colors, unnatural transitions"
-              />
-              
-              <ul className="mt-6 space-y-2 text-sm text-neutral-600">
-                <li>• No hue family was specified</li>
-                <li>• No reason to choose OKLCH vs OKLAB</li>
-                <li>• Output collapses into the same purple gradient reflex</li>
-              </ul>
             </div>
 
-            {/* After */}
+            {/* Night Sky */}
             <div>
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold mb-2">After</h3>
-                <p className="text-sm text-neutral-600 mb-4">Family-first result</p>
+              <h3 className="text-lg font-semibold mb-6">Night Sky / 夜空</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(90deg, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
+                    label="Before: RGB interpolation"
+                    description="Dull, lifeless transitions"
+                  />
+                </div>
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
+                    label="After: Frost Dawn (BluePurple preset)"
+                    description="Deep, atmospheric, dreamy"
+                  />
+                </div>
               </div>
-              
-              <GradientBox
-                gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
-                label="Frost Dawn (BluePurple preset)"
-                description="Vibrant, perceptually smooth"
-              />
-              
-              <ul className="mt-6 space-y-2 text-sm text-neutral-600">
-                <li>• Matched by family first (BluePurple)</li>
-                <li>• Chose oklab for multi-stop smoothness</li>
-                <li>• Explicit, reusable, and perceptually correct</li>
-              </ul>
+            </div>
+
+            {/* Spring Meadow */}
+            <div>
+              <h3 className="text-lg font-semibold mb-6">Spring Meadow / 春日草地</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(90deg, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
+                    label="Before: RGB interpolation"
+                    description="Washed out, lacks vitality"
+                  />
+                </div>
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
+                    label="After: Lakeside Glow (GreenYellow preset)"
+                    description="Fresh, vibrant, natural"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Neon Lights */}
+            <div>
+              <h3 className="text-lg font-semibold mb-6">Neon Lights / 霓虹</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(90deg, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
+                    label="Before: RGB interpolation"
+                    description="Flat, lacks punch"
+                  />
+                </div>
+                <div>
+                  <GradientBox
+                    gradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
+                    label="After: Glacial Glow (Contrast preset)"
+                    description="Bold, electric, statement-making"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
