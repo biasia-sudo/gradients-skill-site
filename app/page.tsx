@@ -27,14 +27,37 @@ function GradientCard({
       } else if (width > height) {
         setDirection('90deg');
       } else {
-        setDirection('180deg');
+        // Vertical: check if we need to reverse
+        // Extract first and last colors to check brightness
+        const colorMatch = gradient.match(/#[0-9A-Fa-f]{6}/g);
+        if (colorMatch && colorMatch.length >= 2) {
+          const firstColor = colorMatch[0];
+          const lastColor = colorMatch[colorMatch.length - 1];
+          
+          // Calculate relative luminance (simplified)
+          const getLuminance = (hex: string) => {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return 0.299 * r + 0.587 * g + 0.114 * b;
+          };
+          
+          const firstLum = getLuminance(firstColor);
+          const lastLum = getLuminance(lastColor);
+          
+          // If first color is lighter than last, reverse (0deg = bottom to top)
+          // Otherwise use 180deg (top to bottom)
+          setDirection(firstLum > lastLum ? '0deg' : '180deg');
+        } else {
+          setDirection('180deg');
+        }
       }
     };
 
     updateDirection();
     window.addEventListener('resize', updateDirection);
     return () => window.removeEventListener('resize', updateDirection);
-  }, []);
+  }, [gradient]);
 
   const colorSpaceMatch = gradient.match(/in (oklab|oklch)/);
   const colorSpace = colorSpaceMatch ? colorSpaceMatch[1] : null;
