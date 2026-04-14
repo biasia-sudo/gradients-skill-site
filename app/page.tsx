@@ -99,20 +99,20 @@ export default function Home() {
           <div className="space-y-16">
             {/* Sunset */}
             <div>
-              <h3 className="text-lg font-semibold mb-6">Sunset / 日落</h3>
+              <h3 className="text-lg font-semibold mb-6">Prompt: "Give me a sunset gradient"</h3>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <GradientBox
-                    gradient="linear-gradient(90deg, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
-                    label="Before: RGB interpolation"
-                    description="Muddy transitions, unnatural middle tones"
+                    gradient="linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%)"
+                    label="Before: Without skill"
+                    description="Generic purple-pink gradient, no family logic"
                   />
                 </div>
                 <div>
                   <GradientBox
                     gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
-                    label="After: Dyed Horizon (RedYellow preset)"
-                    description="Smooth, vibrant, perceptually correct"
+                    label="After: With skill → Dyed Horizon (RedYellow)"
+                    description="Matched by family, perceptually smooth"
                   />
                 </div>
               </div>
@@ -120,20 +120,20 @@ export default function Home() {
 
             {/* Night Sky */}
             <div>
-              <h3 className="text-lg font-semibold mb-6">Night Sky / 夜空</h3>
+              <h3 className="text-lg font-semibold mb-6">Prompt: "Create a dreamy night sky gradient"</h3>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <GradientBox
-                    gradient="linear-gradient(90deg, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
-                    label="Before: RGB interpolation"
-                    description="Dull, lifeless transitions"
+                    gradient="linear-gradient(90deg, #667EEA 0%, #764BA2 100%)"
+                    label="Before: Without skill"
+                    description="Generic blue-purple, lacks atmosphere"
                   />
                 </div>
                 <div>
                   <GradientBox
                     gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
-                    label="After: Frost Dawn (BluePurple preset)"
-                    description="Deep, atmospheric, dreamy"
+                    label="After: With skill → Frost Dawn (BluePurple)"
+                    description="Deep, atmospheric, multi-stop smoothness"
                   />
                 </div>
               </div>
@@ -141,20 +141,20 @@ export default function Home() {
 
             {/* Spring Meadow */}
             <div>
-              <h3 className="text-lg font-semibold mb-6">Spring Meadow / 春日草地</h3>
+              <h3 className="text-lg font-semibold mb-6">Prompt: "Make a fresh spring gradient"</h3>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <GradientBox
-                    gradient="linear-gradient(90deg, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
-                    label="Before: RGB interpolation"
-                    description="Washed out, lacks vitality"
+                    gradient="linear-gradient(90deg, #56CCF2 0%, #2F80ED 100%)"
+                    label="Before: Without skill"
+                    description="Generic blue gradient, no spring feeling"
                   />
                 </div>
                 <div>
                   <GradientBox
                     gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
-                    label="After: Lakeside Glow (GreenYellow preset)"
-                    description="Fresh, vibrant, natural"
+                    label="After: With skill → Lakeside Glow (GreenYellow)"
+                    description="Fresh, vibrant, natural spring atmosphere"
                   />
                 </div>
               </div>
@@ -162,20 +162,20 @@ export default function Home() {
 
             {/* Neon Lights */}
             <div>
-              <h3 className="text-lg font-semibold mb-6">Neon Lights / 霓虹</h3>
+              <h3 className="text-lg font-semibold mb-6">Prompt: "Give me a bold neon gradient"</h3>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <GradientBox
-                    gradient="linear-gradient(90deg, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
-                    label="Before: RGB interpolation"
-                    description="Flat, lacks punch"
+                    gradient="linear-gradient(90deg, #F093FB 0%, #F5576C 100%)"
+                    label="Before: Without skill"
+                    description="Generic pink gradient, lacks contrast"
                   />
                 </div>
                 <div>
                   <GradientBox
                     gradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
-                    label="After: Glacial Glow (Contrast preset)"
-                    description="Bold, electric, statement-making"
+                    label="After: With skill → Glacial Glow (Contrast)"
+                    description="Bold, electric, high-contrast statement"
                   />
                 </div>
               </div>
