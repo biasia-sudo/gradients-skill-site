@@ -43,9 +43,9 @@ function GradientBox({
   const colorSpaceMatch = gradient.match(/in (oklab|oklch)/);
   const colorSpace = colorSpaceMatch ? colorSpaceMatch[1] : null;
   
-  // Extract colors
-  const colorsMatch = gradient.match(/#[0-9A-Fa-f]{6}[^,)]*[,)]/g);
-  const colors = colorsMatch ? colorsMatch.map(c => c.replace(/[,)]/g, '').trim()) : [];
+  // Extract colors with positions
+  const colorsMatch = gradient.match(/#[0-9A-Fa-f]{6}\s+[\d.]+%/g);
+  const colors = colorsMatch ? colorsMatch.map(c => c.trim()) : [];
   
   // Build gradient with direction
   let gradientWithDirection: string;
@@ -105,7 +105,7 @@ export default function Home() {
               </div>
               
               <GradientBox
-                gradient="linear-gradient(90deg, #FF6B6B 0%, #4ECDC4 100%)"
+                gradient="linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%)"
                 label="RGB interpolation"
                 description="Muddy middle colors, unnatural transitions"
               />
@@ -125,13 +125,13 @@ export default function Home() {
               </div>
               
               <GradientBox
-                gradient="linear-gradient(in oklab, #FF6B6B 0%, #4ECDC4 100%)"
-                label="oklab interpolation"
+                gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
+                label="Frost Dawn (BluePurple preset)"
                 description="Vibrant, perceptually smooth"
               />
               
               <ul className="mt-6 space-y-2 text-sm text-neutral-600">
-                <li>• Matched by family first (RedYellow → GreenYellow)</li>
+                <li>• Matched by family first (BluePurple)</li>
                 <li>• Chose oklab for multi-stop smoothness</li>
                 <li>• Explicit, reusable, and perceptually correct</li>
               </ul>
@@ -184,38 +184,38 @@ export default function Home() {
         <div className="container mx-auto px-6 py-20 max-w-6xl">
           <h2 className="text-3xl font-bold mb-4">Preset families</h2>
           <p className="text-neutral-600 mb-12">
-            Six structured families plus vivid OKLCH pairs.
+            Six structured families with curated presets.
           </p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <GradientBox
-              gradient="linear-gradient(in oklab, #FF6B6B 0%, #FFD93D 100%)"
-              label="RedYellow"
+              gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
+              label="RedYellow: Dyed Horizon"
               description="warm, sunrise, peach, coral"
             />
             <GradientBox
-              gradient="linear-gradient(in oklab, #6C5CE7 0%, #A29BFE 100%)"
-              label="BluePurple"
+              gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
+              label="BluePurple: Frost Dawn"
               description="cool, dusk, dreamy, cosmic"
             />
             <GradientBox
-              gradient="linear-gradient(in oklab, #00B894 0%, #FDCB6E 100%)"
-              label="GreenYellow"
+              gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
+              label="GreenYellow: Lakeside Glow"
               description="spring, mint, meadow, fresh"
             />
             <GradientBox
-              gradient="linear-gradient(in oklab, #FF6B6B 0%, #4ECDC4 50%, #6C5CE7 100%)"
-              label="Contrast"
+              gradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
+              label="Contrast: Glacial Glow"
               description="loud, editorial, colorful"
             />
             <GradientBox
-              gradient="linear-gradient(in oklab, #2D3436 0%, #636E72 100%)"
-              label="Dark"
+              gradient="linear-gradient(in oklab, #F2C7EB 0%, #4F70B5 50%, #3D5C94 59%, #363D4F 75%, #402105 100%)"
+              label="Dark: Dusky Horizon"
               description="moody, luxury, cinematic"
             />
             <GradientBox
-              gradient="linear-gradient(in oklab, #DFE6E9 0%, #B2BEC3 100%)"
-              label="Light"
+              gradient="linear-gradient(in oklab, #D9F5FA 0%, #FCD9D6 31%, #FCBAC9 61%, #F0B2F5 100%)"
+              label="Light: Peach"
               description="airy, pastel, soft"
             />
           </div>
