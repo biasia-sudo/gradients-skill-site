@@ -39,10 +39,22 @@ function GradientBox({
     return () => window.removeEventListener('resize', updateDirection);
   }, []);
 
-  const gradientWithDirection = gradient.replace(
-    /linear-gradient\((in \w+,\s*)?/,
-    `linear-gradient(${direction}, $1`
-  );
+  // Extract color space and colors from gradient
+  const colorSpaceMatch = gradient.match(/in (oklab|oklch)/);
+  const colorSpace = colorSpaceMatch ? colorSpaceMatch[1] : null;
+  
+  // Extract colors
+  const colorsMatch = gradient.match(/#[0-9A-Fa-f]{6}[^,)]*[,)]/g);
+  const colors = colorsMatch ? colorsMatch.map(c => c.replace(/[,)]/g, '').trim()) : [];
+  
+  // Build gradient with direction
+  let gradientWithDirection: string;
+  if (colorSpace && colors.length > 0) {
+    gradientWithDirection = `linear-gradient(${direction} in ${colorSpace}, ${colors.join(', ')})`;
+  } else {
+    // Fallback: just replace direction
+    gradientWithDirection = gradient.replace(/linear-gradient\([^,]*,/, `linear-gradient(${direction},`);
+  }
 
   return (
     <div className="space-y-3">
