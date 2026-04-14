@@ -2,17 +2,21 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-function GradientCard({ 
+function GradientProductCard({ 
   gradient, 
+  icon,
   title,
-  description
+  description,
+  price
 }: { 
   gradient: string; 
+  icon: string;
   title: string;
-  description?: string;
+  description: string;
+  price: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [direction, setDirection] = useState('90deg');
+  const [direction, setDirection] = useState('180deg');
 
   useEffect(() => {
     if (!ref.current) return;
@@ -27,14 +31,11 @@ function GradientCard({
       } else if (width > height) {
         setDirection('90deg');
       } else {
-        // Vertical: check if we need to reverse
-        // Extract first and last colors to check brightness
         const colorMatch = gradient.match(/#[0-9A-Fa-f]{6}/g);
         if (colorMatch && colorMatch.length >= 2) {
           const firstColor = colorMatch[0];
           const lastColor = colorMatch[colorMatch.length - 1];
           
-          // Calculate relative luminance (simplified)
           const getLuminance = (hex: string) => {
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);
@@ -45,8 +46,6 @@ function GradientCard({
           const firstLum = getLuminance(firstColor);
           const lastLum = getLuminance(lastColor);
           
-          // If first color is lighter than last, reverse (0deg = bottom to top)
-          // Otherwise use 180deg (top to bottom)
           setDirection(firstLum > lastLum ? '0deg' : '180deg');
         } else {
           setDirection('180deg');
@@ -72,51 +71,36 @@ function GradientCard({
   }
 
   return (
-    <div className="group cursor-pointer">
-      <div 
-        ref={ref}
-        className="w-full aspect-[4/3] rounded overflow-hidden relative"
-        style={{ background: gradientWithDirection }}
-      >
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+    <div className="bg-white border border-neutral-200">
+      {/* Header */}
+      <div className="p-4 border-b border-neutral-200">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-2xl">{icon}</span>
+          <h3 className="text-sm font-medium">{title}</h3>
+        </div>
+        <p className="text-xs text-neutral-600 leading-relaxed">{description}</p>
       </div>
-      <div className="mt-3">
-        <div className="text-sm font-medium">{title}</div>
-        {description && (
-          <div className="text-xs text-neutral-500 mt-1">{description}</div>
-        )}
-      </div>
-    </div>
-  );
-}
 
-function BeforeAfterGroup({
-  prompt,
-  beforeGradient,
-  afterGradient,
-  afterTitle,
-  afterFamily
-}: {
-  prompt: string;
-  beforeGradient: string;
-  afterGradient: string;
-  afterTitle: string;
-  afterFamily: string;
-}) {
-  return (
-    <div className="space-y-4">
-      <h3 className="text-sm font-medium">{prompt}</h3>
-      <div className="grid grid-cols-2 gap-4">
-        <GradientCard
-          gradient={beforeGradient}
-          title="Before: Without skill"
-          description="Generic AI gradient"
-        />
-        <GradientCard
-          gradient={afterGradient}
-          title={`After: ${afterTitle}`}
-          description={afterFamily}
-        />
+      {/* Gradient Display */}
+      <div className="relative aspect-[3/4] p-8 flex items-center justify-center" style={{ background: gradientWithDirection }}>
+        <div className="bg-white/90 backdrop-blur-sm p-8 text-center max-w-[200px]">
+          <div className="text-xs text-neutral-500 mb-2">GRADIENTS</div>
+          <div className="text-sm font-medium mb-4">{title}</div>
+          <div className="text-xs text-neutral-600">oklab</div>
+          <div className="w-full h-px bg-neutral-200 my-4" />
+          <div className="text-2xl font-bold">gradients</div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="p-4 border-t border-neutral-200">
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-xs text-neutral-600">From preset library</div>
+          <div className="text-sm font-medium">{price}</div>
+        </div>
+        <button className="w-full bg-white border border-neutral-900 text-neutral-900 py-2 text-xs font-medium hover:bg-neutral-900 hover:text-white transition-colors">
+          VIEW PRESET
+        </button>
       </div>
     </div>
   );
@@ -124,172 +108,91 @@ function BeforeAfterGroup({
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen bg-neutral-50">
       {/* Header */}
-      <header className="border-b border-neutral-200">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex items-start justify-between gap-8">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <div className="w-8 h-8 bg-black rounded-full" />
-            </div>
+      <header className="bg-white border-b border-neutral-200">
+        <div className="container mx-auto px-6">
+          {/* Logo */}
+          <div className="py-8 text-center">
+            <h1 className="text-6xl font-bold tracking-tight flex items-center justify-center gap-3">
+              gradients
+              <span className="text-5xl">✦</span>
+            </h1>
+          </div>
 
-            {/* Description */}
-            <div className="flex-1 max-w-md">
-              <p className="text-sm text-neutral-600 leading-relaxed">
-                Give your agent a real gradient vocabulary. Preset-first workflow, 
-                perceptual interpolation, and multi-platform support—loaded every time your AI writes code.
-              </p>
-            </div>
-
-            {/* Navigation */}
-            <nav className="flex items-center gap-6 text-sm">
-              <a href="#presets" className="text-neutral-600 hover:text-black">Presets</a>
-              <a href="#install" className="text-neutral-600 hover:text-black">Install</a>
+          {/* Navigation */}
+          <nav className="border-t border-neutral-200">
+            <div className="flex items-center justify-center gap-12 py-4 text-xs tracking-wider">
+              <a href="#home" className="hover:text-neutral-600">HOME</a>
+              <a href="#about" className="hover:text-neutral-600">ABOUT</a>
+              <a href="#presets" className="hover:text-neutral-600">PRESETS</a>
+              <a href="#install" className="hover:text-neutral-600">INSTALL</a>
               <a href="https://github.com/biasia-sudo/gradients-skill" 
-                 className="bg-black text-white px-4 py-2 rounded hover:bg-neutral-800"
+                 className="hover:text-neutral-600"
                  target="_blank"
                  rel="noopener noreferrer">
-                GitHub
+                GITHUB
               </a>
-            </nav>
-          </div>
+            </div>
+          </nav>
         </div>
       </header>
 
-      {/* Before/After Grid */}
-      <section className="container mx-auto px-6 py-20">
-        <h2 className="text-2xl font-bold mb-12">Before / After</h2>
-        
-        <div className="grid md:grid-cols-2 gap-12">
-          <BeforeAfterGroup
-            prompt="Give me a sunset gradient"
-            beforeGradient="linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%)"
-            afterGradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
-            afterTitle="Dyed Horizon"
-            afterFamily="RedYellow"
-          />
-
-          <BeforeAfterGroup
-            prompt="Create a dreamy night sky gradient"
-            beforeGradient="linear-gradient(90deg, #667EEA 0%, #764BA2 100%)"
-            afterGradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
-            afterTitle="Frost Dawn"
-            afterFamily="BluePurple"
-          />
-
-          <BeforeAfterGroup
-            prompt="Make a fresh spring gradient"
-            beforeGradient="linear-gradient(90deg, #56CCF2 0%, #2F80ED 100%)"
-            afterGradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
-            afterTitle="Lakeside Glow"
-            afterFamily="GreenYellow"
-          />
-
-          <BeforeAfterGroup
-            prompt="Give me a bold neon gradient"
-            beforeGradient="linear-gradient(90deg, #F093FB 0%, #F5576C 100%)"
-            afterGradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
-            afterTitle="Glacial Glow"
-            afterFamily="Contrast"
-          />
-        </div>
-      </section>
-
-      {/* Preset Families */}
-      <section id="presets" className="border-t border-neutral-200">
-        <div className="container mx-auto px-6 py-20">
-          <h2 className="text-2xl font-bold mb-12">Preset Families</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <GradientCard
-              gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
-              title="RedYellow: Dyed Horizon"
-              description="warm, sunrise, peach, coral"
-            />
-
-            <GradientCard
-              gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
-              title="BluePurple: Frost Dawn"
-              description="cool, dusk, dreamy, cosmic"
-            />
-
-            <GradientCard
-              gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
-              title="GreenYellow: Lakeside Glow"
-              description="spring, mint, meadow, fresh"
-            />
-
-            <GradientCard
-              gradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
-              title="Contrast: Glacial Glow"
-              description="loud, editorial, colorful"
-            />
-
-            <GradientCard
-              gradient="linear-gradient(in oklab, #F2C7EB 0%, #4F70B5 50%, #3D5C94 59%, #363D4F 75%, #402105 100%)"
-              title="Dark: Dusky Horizon"
-              description="moody, luxury, cinematic"
-            />
-
-            <GradientCard
-              gradient="linear-gradient(in oklab, #D9F5FA 0%, #FCD9D6 31%, #FCBAC9 61%, #F0B2F5 100%)"
-              title="Light: Peach"
-              description="airy, pastel, soft"
-            />
+      {/* Hero */}
+      <section className="container mx-auto px-6 py-12">
+        <div className="bg-white border border-neutral-200 overflow-hidden">
+          <div 
+            className="relative h-[400px] flex items-center justify-center"
+            style={{
+              background: 'linear-gradient(90deg in oklab, #DDDFEE 0%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)'
+            }}
+          >
+            <h2 className="text-4xl font-light text-white tracking-wide">
+              of perceptual color
+            </h2>
           </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="border-t border-neutral-200">
-        <div className="container mx-auto px-6 py-20">
-          <h2 className="text-2xl font-bold mb-12">
-            It improves prompting structure, not just the final colors.
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-12">
-            <div>
-              <div className="text-sm text-neutral-500 mb-2">01</div>
-              <h3 className="text-lg font-semibold mb-3">Match by family first</h3>
-              <p className="text-sm text-neutral-600">
-                The model stops guessing from "nice" and starts from intent: blue-purple tech, 
-                skincare light, bold contrast, moody dark, and more.
-              </p>
-            </div>
+      {/* Products Grid */}
+      <section id="presets" className="container mx-auto px-6 pb-20">
+        <div className="grid md:grid-cols-3 gap-6">
+          <GradientProductCard
+            icon="🌅"
+            title="Dyed Horizon"
+            description="Warm sunset gradient with a calming breeze. A blend of peach and coral tones."
+            gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
+            price="RedYellow"
+          />
 
-            <div>
-              <div className="text-sm text-neutral-500 mb-2">02</div>
-              <h3 className="text-lg font-semibold mb-3">Choose interpolation with intent</h3>
-              <p className="text-sm text-neutral-600">
-                <code className="bg-neutral-100 px-2 py-1 rounded text-xs">oklch</code> for clean vivid ramps. 
-                <code className="bg-neutral-100 px-2 py-1 rounded text-xs ml-1">oklab</code> for deeper, 
-                multi-stop atmospheres. The choice becomes explicit and reusable.
-              </p>
-            </div>
+          <GradientProductCard
+            icon="🌙"
+            title="Frost Dawn"
+            description="Dreamy violet gradient with a colorful fragrance. Cool dusk atmosphere."
+            gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
+            price="BluePurple"
+          />
 
-            <div>
-              <div className="text-sm text-neutral-500 mb-2">03</div>
-              <h3 className="text-lg font-semibold mb-3">Multi-platform support</h3>
-              <p className="text-sm text-neutral-600">
-                CSS, Swift, Kotlin, Flutter, Canvas—one skill, any platform. 
-                Automatic color space fitting ensures smoothness everywhere.
-              </p>
-            </div>
-          </div>
+          <GradientProductCard
+            icon="🌸"
+            title="Lakeside Glow"
+            description="Fresh spring gradient with a burst of mint. Natural meadow feeling."
+            gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
+            price="GreenYellow"
+          />
         </div>
       </section>
 
-      {/* Install */}
-      <section id="install" className="border-t border-neutral-200">
-        <div className="container mx-auto px-6 py-20">
-          <h2 className="text-2xl font-bold mb-8">Install anywhere</h2>
-          <p className="text-neutral-600 mb-8 max-w-2xl">
+      {/* Install Section */}
+      <section id="install" className="container mx-auto px-6 pb-20">
+        <div className="bg-white border border-neutral-200 p-12 text-center">
+          <h2 className="text-2xl font-medium mb-6">Install anywhere</h2>
+          <p className="text-sm text-neutral-600 mb-8 max-w-2xl mx-auto">
             One command for Codex, Claude Code, and the rest of the Skills CLI ecosystem.
           </p>
           
-          <div className="bg-black text-white p-6 rounded font-mono text-sm mb-6 max-w-2xl">
-            <div className="text-neutral-400 mb-2 text-xs">Recommended install</div>
+          <div className="bg-neutral-900 text-white p-6 rounded font-mono text-sm mb-6 max-w-2xl mx-auto text-left">
+            <div className="text-neutral-400 mb-2 text-xs">$ Recommended install</div>
             <div>npx skills add biasia-sudo/gradients-skill -g -y</div>
           </div>
 
@@ -300,14 +203,14 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-neutral-200">
-        <div className="container mx-auto px-6 py-12">
-          <div className="flex justify-between items-center text-sm text-neutral-500">
+      <footer className="border-t border-neutral-200 bg-white">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex justify-between items-center text-xs text-neutral-500">
             <div>
               Built by{' '}
               <a 
                 href="https://github.com/biasia-sudo" 
-                className="text-black hover:underline"
+                className="text-neutral-900 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -316,7 +219,7 @@ export default function Home() {
             </div>
             <a 
               href="https://github.com/biasia-sudo/gradients-skill" 
-              className="hover:text-black"
+              className="hover:text-neutral-900"
               target="_blank"
               rel="noopener noreferrer"
             >
