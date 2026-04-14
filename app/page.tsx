@@ -5,13 +5,11 @@ import { useEffect, useRef, useState } from 'react';
 function GradientCard({ 
   gradient, 
   title,
-  description,
-  size = 'medium'
+  description
 }: { 
   gradient: string; 
   title: string;
   description?: string;
-  size?: 'small' | 'medium' | 'large' | 'xlarge';
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [direction, setDirection] = useState('90deg');
@@ -50,18 +48,11 @@ function GradientCard({
     gradientWithDirection = gradient.replace(/linear-gradient\([^,]*,/, `linear-gradient(${direction},`);
   }
 
-  const sizeClasses = {
-    small: 'h-48',
-    medium: 'h-64',
-    large: 'h-80',
-    xlarge: 'h-96'
-  };
-
   return (
     <div className="group cursor-pointer">
       <div 
         ref={ref}
-        className={`w-full ${sizeClasses[size]} rounded overflow-hidden relative`}
+        className="w-full aspect-[4/3] rounded overflow-hidden relative"
         style={{ background: gradientWithDirection }}
       >
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
@@ -71,6 +62,38 @@ function GradientCard({
         {description && (
           <div className="text-xs text-neutral-500 mt-1">{description}</div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function BeforeAfterGroup({
+  prompt,
+  beforeGradient,
+  afterGradient,
+  afterTitle,
+  afterFamily
+}: {
+  prompt: string;
+  beforeGradient: string;
+  afterGradient: string;
+  afterTitle: string;
+  afterFamily: string;
+}) {
+  return (
+    <div className="space-y-4">
+      <h3 className="text-sm font-medium">{prompt}</h3>
+      <div className="grid grid-cols-2 gap-4">
+        <GradientCard
+          gradient={beforeGradient}
+          title="Before: Without skill"
+          description="Generic AI gradient"
+        />
+        <GradientCard
+          gradient={afterGradient}
+          title={`After: ${afterTitle}`}
+          description={afterFamily}
+        />
       </div>
     </div>
   );
@@ -111,84 +134,42 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Grid */}
+      {/* Before/After Grid */}
       <section className="container mx-auto px-6 py-20">
-        <div className="grid grid-cols-12 gap-4">
-          {/* Before/After: Sunset */}
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%)"
-              title="Before: Sunset"
-              description="Generic purple-pink"
-              size="large"
-            />
-          </div>
+        <h2 className="text-2xl font-bold mb-12">Before / After</h2>
+        
+        <div className="grid md:grid-cols-2 gap-12">
+          <BeforeAfterGroup
+            prompt="Give me a sunset gradient"
+            beforeGradient="linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%)"
+            afterGradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
+            afterTitle="Dyed Horizon"
+            afterFamily="RedYellow"
+          />
 
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
-              title="After: Dyed Horizon"
-              description="RedYellow preset"
-              size="medium"
-            />
-          </div>
+          <BeforeAfterGroup
+            prompt="Create a dreamy night sky gradient"
+            beforeGradient="linear-gradient(90deg, #667EEA 0%, #764BA2 100%)"
+            afterGradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
+            afterTitle="Frost Dawn"
+            afterFamily="BluePurple"
+          />
 
-          {/* Before/After: Night Sky */}
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(90deg, #667EEA 0%, #764BA2 100%)"
-              title="Before: Night Sky"
-              description="Generic blue-purple"
-              size="medium"
-            />
-          </div>
+          <BeforeAfterGroup
+            prompt="Make a fresh spring gradient"
+            beforeGradient="linear-gradient(90deg, #56CCF2 0%, #2F80ED 100%)"
+            afterGradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
+            afterTitle="Lakeside Glow"
+            afterFamily="GreenYellow"
+          />
 
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
-              title="After: Frost Dawn"
-              description="BluePurple preset"
-              size="large"
-            />
-          </div>
-
-          {/* Before/After: Spring */}
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(90deg, #56CCF2 0%, #2F80ED 100%)"
-              title="Before: Spring"
-              description="Generic blue"
-              size="medium"
-            />
-          </div>
-
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
-              title="After: Lakeside Glow"
-              description="GreenYellow preset"
-              size="xlarge"
-            />
-          </div>
-
-          {/* Before/After: Neon */}
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(90deg, #F093FB 0%, #F5576C 100%)"
-              title="Before: Neon"
-              description="Generic pink"
-              size="large"
-            />
-          </div>
-
-          <div className="col-span-3">
-            <GradientCard
-              gradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
-              title="After: Glacial Glow"
-              description="Contrast preset"
-              size="medium"
-            />
-          </div>
+          <BeforeAfterGroup
+            prompt="Give me a bold neon gradient"
+            beforeGradient="linear-gradient(90deg, #F093FB 0%, #F5576C 100%)"
+            afterGradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
+            afterTitle="Glacial Glow"
+            afterFamily="Contrast"
+          />
         </div>
       </section>
 
@@ -197,60 +178,42 @@ export default function Home() {
         <div className="container mx-auto px-6 py-20">
           <h2 className="text-2xl font-bold mb-12">Preset Families</h2>
           
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-4">
-              <GradientCard
-                gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
-                title="RedYellow: Dyed Horizon"
-                description="warm, sunrise, peach, coral"
-                size="large"
-              />
-            </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <GradientCard
+              gradient="linear-gradient(in oklab, #DDDFEE 0%, #DFCAAD 26.4%, #F8A4A4 52.4%, #F16041 84.1%, #EF2F6A 100%)"
+              title="RedYellow: Dyed Horizon"
+              description="warm, sunrise, peach, coral"
+            />
 
-            <div className="col-span-4">
-              <GradientCard
-                gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
-                title="BluePurple: Frost Dawn"
-                description="cool, dusk, dreamy, cosmic"
-                size="medium"
-              />
-            </div>
+            <GradientCard
+              gradient="linear-gradient(in oklab, #DDDFEE 0.5%, #DAA1AF 42.3%, #5572B6 79.8%, #7C62A5 100%)"
+              title="BluePurple: Frost Dawn"
+              description="cool, dusk, dreamy, cosmic"
+            />
 
-            <div className="col-span-4">
-              <GradientCard
-                gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
-                title="GreenYellow: Lakeside Glow"
-                description="spring, mint, meadow, fresh"
-                size="large"
-              />
-            </div>
+            <GradientCard
+              gradient="linear-gradient(in oklab, #EFEDAD 0%, #A7E1A7 26.9%, #3898EF 83.2%, #119AB8 100%)"
+              title="GreenYellow: Lakeside Glow"
+              description="spring, mint, meadow, fresh"
+            />
 
-            <div className="col-span-4">
-              <GradientCard
-                gradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
-                title="Contrast: Glacial Glow"
-                description="loud, editorial, colorful"
-                size="medium"
-              />
-            </div>
+            <GradientCard
+              gradient="linear-gradient(in oklab, #FFD593 0%, #FFB48B 32.7%, #FF92DF 64.4%, #989BFF 100%)"
+              title="Contrast: Glacial Glow"
+              description="loud, editorial, colorful"
+            />
 
-            <div className="col-span-4">
-              <GradientCard
-                gradient="linear-gradient(in oklab, #F2C7EB 0%, #4F70B5 50%, #3D5C94 59%, #363D4F 75%, #402105 100%)"
-                title="Dark: Dusky Horizon"
-                description="moody, luxury, cinematic"
-                size="large"
-              />
-            </div>
+            <GradientCard
+              gradient="linear-gradient(in oklab, #F2C7EB 0%, #4F70B5 50%, #3D5C94 59%, #363D4F 75%, #402105 100%)"
+              title="Dark: Dusky Horizon"
+              description="moody, luxury, cinematic"
+            />
 
-            <div className="col-span-4">
-              <GradientCard
-                gradient="linear-gradient(in oklab, #D9F5FA 0%, #FCD9D6 31%, #FCBAC9 61%, #F0B2F5 100%)"
-                title="Light: Peach"
-                description="airy, pastel, soft"
-                size="medium"
-              />
-            </div>
+            <GradientCard
+              gradient="linear-gradient(in oklab, #D9F5FA 0%, #FCD9D6 31%, #FCBAC9 61%, #F0B2F5 100%)"
+              title="Light: Peach"
+              description="airy, pastel, soft"
+            />
           </div>
         </div>
       </section>
